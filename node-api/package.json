@@ -1,0 +1,21 @@
+{
+  "name": "node-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "babel-node src/index.js"
+  },
+
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+
+  "devDependencies": {
+    "add": "^2.0.6",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.19.1",
+    "yarn": "^1.17.3"
+  }
+}
