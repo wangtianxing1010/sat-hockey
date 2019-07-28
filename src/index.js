@@ -14,15 +14,23 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import rootReducer from './rootReducer';
+import {userLoggedIn} from './actions/auth';
 
 const store = createStore(
     rootReducer, 
     composeWithDevTools(applyMiddleware(thunk))
 )
 
+if(localStorage.sat_hockeyJWT){
+    const user = { token: localStorage.sat_hockeyJWT }
+    store.dispatch(userLoggedIn(user))
+}
+
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </BrowserRouter>, 
     document.getElementById('root')
 );
