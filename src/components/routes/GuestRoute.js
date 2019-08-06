@@ -3,16 +3,20 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const GuestRoute = ({isAuthenticated, component:Component, ...rest}) => (
-    <Route {...rest} render={ props => 
-        isAuthenticated ? 
-        <Redirect to='/dashboard' /> : 
-        <Component {...props} />}/>
+const GuestRoute = ({isAuthenticated, component: Component, ...rest}) => (
+    <Route {...rest} 
+        render={ 
+            props => 
+            isAuthenticated 
+            ? (<Redirect to='/dashboard' />)
+            : (<Component {...props} />)
+        }
+    />
 );
 
 GuestRoute.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-    component: PropTypes.func.isRequired
+    component: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state){

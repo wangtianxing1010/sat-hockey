@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import ConfirmEmailMessage from '../messages/ConfirmEmailMessage';
 
 class DashboardPage extends React.Component{
@@ -21,7 +21,7 @@ class DashboardPage extends React.Component{
 // );
 
 DashboardPage.propTypes = {
-    isConfirmed: PropType.bool.isRequired
+    isConfirmed: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state){

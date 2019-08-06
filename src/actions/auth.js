@@ -20,3 +20,17 @@ export const logout = () => dispatch => {
         localStorage.removeItem("sat_hockeyJWT");  
         dispatch(userLoggedOut());
     };
+
+export const signup = data => dispatch => 
+    api.user.signup(data).then(user => {
+        console.log('actions/auth', user);
+        localStorage.sat_hockeyJWT = user.token;  
+        dispatch(userLoggedIn(user));
+    });
+
+export const confirm = token => dispatch => 
+    api.user.confirm(token).then(user => {
+        console.log('actions/auth', user);
+        localStorage.sat_hockeyJWT = user.token;  
+        dispatch(userLoggedIn(user));
+    });
