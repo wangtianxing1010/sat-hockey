@@ -34,3 +34,12 @@ export const confirm = token => dispatch =>
         localStorage.sat_hockeyJWT = user.token;  
         dispatch(userLoggedIn(user));
     });
+
+export const resetPasswordRequest = (data) => () =>
+    api.user.resetPasswordRequest(data);
+
+export const validateResetPasswordToken = token => () =>
+    api.user.validateResetPasswordToken(token);
+
+export const resetPassword = data => () =>
+    api.user.resetPassword(data);
