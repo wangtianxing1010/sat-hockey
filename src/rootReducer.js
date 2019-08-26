@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import { combineReducers } from 'redux';
-
-import user from './reducers/user';
-
-export default combineReducers({
-    user:  () => ({})
-})
-=======
 import { combineReducers } from "redux";
 	
 import user from './reducers/user';
@@ -18,4 +9,3 @@ export default combineReducers({
 	events,
 	books,
 });
->>>>>>> HEAD@{4}

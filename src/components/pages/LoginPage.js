@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import LoginForm from '../forms/LoginForm';
-<<<<<<< HEAD
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-=======
 import { login } from '../../actions/auth';
->>>>>>> HEAD@{4}
 
 class LoginPage extends React.Component{
 
@@ -36,10 +31,6 @@ LoginPage.propTypes = {
         push: PropTypes.func.isRequired
     }).isRequired,
     login: PropTypes.func.isRequired
-<<<<<<< HEAD
-}
-=======
 };
->>>>>>> HEAD@{4}
 
 export default connect(null, { login })(LoginPage);
