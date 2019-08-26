@@ -1,24 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+// react router
 import { BrowserRouter } from 'react-router-dom';
-
+// semantic ui
 import 'semantic-ui-css/semantic.min.css';
-
+// redux and thunk
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
+// app
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import rootReducer from './rootReducer';
+import {userLoggedIn} from './actions/auth';
+
+import decode from 'jwt-decode';
 
 const store = createStore(
     rootReducer, 
     composeWithDevTools(applyMiddleware(thunk))
 )
+
+if(localStorage.sat_hockeyJWT){
+    const payload = decode(localStorage.sat_hockeyJWT);
+    const user = { 
+        token: localStorage.sat_hockeyJWT,
+        email: payload.email,
+        confirmed: payload.confirmed,
+     };
+    store.dispatch(userLoggedIn(user));
+}
 
 ReactDOM.render(
     <BrowserRouter>
