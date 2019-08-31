@@ -19,5 +19,9 @@ export default {
             ,
         resetPassword: data =>
             axios.post('/api/auth/reset_password/', {data}), 
-    } 
+    } ,
+    event :{
+        newEvent: data =>
+            axios.post('/api/events/new_event/', {data}),
+    }
 };

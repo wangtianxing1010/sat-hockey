@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const AddBookCta = ()=>(
     <Card centered>
         <Card.Content textAlign='center'>
-            <Card.Header>Add new Book</Card.Header>
+            <Card.Header>Add new Event</Card.Header>
             <Link to='/books/new'>
                 <Icon name='plus circle' size='massive' />
             </Link>
