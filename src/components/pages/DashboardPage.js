@@ -26,16 +26,15 @@ class DashboardPage extends React.Component{
 
 DashboardPage.propTypes = {
     isConfirmed: PropTypes.bool.isRequired,
-    books: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
+    // books: PropTypes.arrayOf(PropTypes.shape({
+    //     title: PropTypes.string.isRequired,
+    // }).isRequired).isRequired,
 };
 
 function mapStateToProps(state){
     return{
         isConfirmed: !!state.user.confirmed,
         events: allEventsSelector(state),
-        books: allBooksSelector(state),
     }
 }
 

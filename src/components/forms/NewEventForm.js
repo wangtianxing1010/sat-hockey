@@ -1,42 +1,65 @@
 import React from 'react';
-import { Form, Input, Label, Button } from 'semantic-ui-react';
+import { Form, Label, Button } from 'semantic-ui-react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
-import axios from 'axios';
+import InlineError from '../messages/InlineError';
+import PropTypes from 'prop-types';
 
 class NewEventForm extends React.Component{
     state={
         loading: false,
         errors: {},
-        data:{
-            eventName: '',
-            tags: [],
-            maxAllowed: 0,
-            datetime: {
-                datetime: '',
-                year: 0,
-                month: 0,
-                date: 0,
-                weekday: 0,
-                timezone: '',
+        // data:{
+        //     eventName: '',
+        //     tags: [],
+        //     maxAllowed: 0,
+        //     admission:0,
+        //     // datetime
+        //     datetime: '',
+        //     year: 0,
+        //     month: 0,
+        //     date: 0,
+        //     weekday: 0,
+        //     timezone: '',
 
-                time: '',
-                hour: 0,
-                min: 0,
-            },
-            location:{
-                location:'',
-                room:0,
-                streetNo:0,
-                street:'',
-                city:'',
-                postCode:''
-            },
+        //     time: '',
+        //     hour: 0,
+        //     min: 0,
+        //     // location
+        //     location:'',
+        //     room:0,
+        //     streetNo:0,
+        //     street:'',
+        //     city:'',
+        //     postCode:'',
+        // }
+        data:{
+            eventName: 'hockey',
+            tags: [],
+            maxAllowed: 10,
             admission:0,
+            // datetime
+            datetime: '',
+            year: 0,
+            month: 0,
+            date: 0,
+            weekday: 0,
+            timezone: '',
+
+            time: '',
+            hour: 0,
+            min: 0,
+            // location
+            location:'',
+            room:0,
+            streetNo:30,
+            street:'warwick ave',
+            city:'ajax',
+            postCode:'',
         }
     }
 
-    // location google api
+    // future location input: sending query to location google api
 
     // handleTypingChange =(e, {searchQuery})=>{
     //     clearTimeout(this.timer);
@@ -47,20 +70,20 @@ class NewEventForm extends React.Component{
     // fetchOptions = () => {
     //     if (!this.state.query) return ;
     //     this.setState({ loading: true });
-    //     axios.get(`/api/books/search?q=${this.state.query}`)
-    //     .then(res=>res.data.books)
-    //     .then(books=>{
+    //     axios.get(`/api/location/search?q=${this.state.query}`)
+    //     .then(res=>res.data.location)
+    //     .then(location=>{
     //        const options = [];
     //        const bookHash = {};
-    //        books.forEach(book=>{
+    //        location.forEach(=>{
     //            bookHash[book.id]=book;
     //            options.push({
-    //             key: book.id,
-    //             value: book.id,
-    //             text: book.text,
+    //             key: .id,
+    //             value: .id,
+    //             text: .text,
     //            })
     //        });
-    //        this.setState({ loading: false, books: bookHash, options })
+    //        this.setState({ loading: false, location: bookHash, options })
     //     });
     // }
 
@@ -76,6 +99,9 @@ class NewEventForm extends React.Component{
 
     // handle date change
     handleDateChange = (e) => {
+        console.log('datetime', e);
+        console.log('datetime type', typeof(e));
+
         let date = e.getDate();
         let month = e.getMonth()+1;
         let year = e.getFullYear();
@@ -83,14 +109,11 @@ class NewEventForm extends React.Component{
         this.setState({
             data: {
                 ...this.state.data,
-                datetime: {
-                    ...this.state.data.datetime,
-                    datetime: e,
-                    date,
-                    month,
-                    year,
-                    weekday
-                }
+                datetime: e,
+                date,
+                month,
+                year,
+                weekday
             }
         });
     }
@@ -99,14 +122,14 @@ class NewEventForm extends React.Component{
         const errors = {};
         if(!data.eventName) errors.eventName = "Can't be empty";
         if(data.maxAllowed<=0) errors.maxAllowed = "Has to be more than 0";
-        if(!data.datetime.datetime) errors.datetime.datetime = "Please pick a date";
-        if(!data.datetime.hour) errors.datetime.hour = "Please choose a time";
+        if(!data.datetime) errors.datetime.datetime = "Please pick a date";
+        // if(!data.datetime.hour) errors.datetime.hour = "Please choose a time";
 
+        if(!data.streetNo) errors.location.streetNo = "Can't be empty";
+        if(!data.street) errors.location.street = "Can't be empty";
+        if(!data.city) errors.location.city = "Can't be empty";
         //authenticated user
-        if(!data.location.streetNo) errors.location.streetNo = "Can't be empty";
-        if(!data.location.street) errors.location.street = "Can't be empty";
-        if(!data.location.city) errors.location.city = "Can't be empty";
-        
+
         return errors;
     }
 
@@ -117,15 +140,16 @@ class NewEventForm extends React.Component{
         if (Object.keys(errors).length === 0){
             this.setState({loading: true});
             this.props.submit(this.state.data)
-            .then(()=>this.history.push('/dashboard'))
-        //.err=> this.setState({loading:false, err.global: err.res.error.message})
+                .catch(err=> {
+                    this.setState({loading:false, errors: err});
+                })
         } 
     }
    
     render(){
-        const { data } = this.state;
+        const { data, loading } = this.state;
         return(
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit} loading={loading}>
                 <Form.Group>
                     <Form.Field width={3}>
                         <label htmlFor='eventName'>Event Name</label>
@@ -144,7 +168,7 @@ class NewEventForm extends React.Component{
                     type="number" id="maxAllowed" name="maxAllowed" width={2} onChange={this.handleChange} />
                     <Form.Input label='Street No.'placeholder='Street No.' value={data.streetNo}
                     type="number" id="streetNo" name="streetNo" width={2} onChange={this.handleChange} />
-                    <Form.Input label='Street' placeholder='Street' value={data.state}
+                    <Form.Input label='Street' placeholder='Street' value={data.street}
                     type="text" id="street" name="street" width={4} onChange={this.handleChange} />
                 </Form.Group>
                 <Form.Group>
@@ -170,5 +194,8 @@ class NewEventForm extends React.Component{
     }
 }
 
+NewEventForm.propType = {
+    submit: PropTypes.func.isRequired,
+}
 
 export default NewEventForm;
