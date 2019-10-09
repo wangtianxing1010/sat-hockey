@@ -16,6 +16,9 @@ import TopNavigation from './components/navigations/TopNavigation';
 import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
 
+
+import NewBookPage from './components/pages/__NewBookPage';
+
 class App extends React.Component{
   componentDidMount(){
     console.log('component type', typeof(HomePage));
@@ -34,7 +37,7 @@ class App extends React.Component{
         <GuestRoute path='/signup' exact component={SignupPage} />
         <GuestRoute path='/forgot_password' exact component={ForgotPasswordPage} />
         <UserRoute path='/dashboard' exact component={DashboardPage} />
-        <UserRoute path='/books/new' exact component={NewEventPage} />
+        <UserRoute path='/books/new' exact component={NewBookPage} />
       </div>
     )    
   }

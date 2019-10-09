@@ -19,5 +19,9 @@ export default {
             ,
         resetPassword: data =>
             axios.post('/api/auth/reset_password/', {data}), 
-    } 
+    } ,
+    book: {
+        newbook: book =>
+            axios.post('/api/books', {book}).then(res=>res.data.book)
+    }
 };

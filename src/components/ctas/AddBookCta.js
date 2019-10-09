@@ -2,10 +2,11 @@ import React from 'react';
 import { Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-const AddBookCta = ()=>(
+const AddEventCta = ()=>(
     <Card centered>
         <Card.Content textAlign='center'>
-            <Card.Header>Add new Book</Card.Header>
+            <Card.Header>Add new Event</Card.Header>
+            {/* change url */}
             <Link to='/books/new'>
                 <Icon name='plus circle' size='massive' />
             </Link>
@@ -13,4 +14,4 @@ const AddBookCta = ()=>(
     </Card>
 );
 
-export default AddBookCta;
+export default AddEventCta;

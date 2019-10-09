@@ -3,7 +3,8 @@ import { createSelector } from 'reselect';
 
 export default function events(state={}, action={}) {
     switch(action.type){
-        default: return state;
+        default: 
+            return state;
     }
 }
 
