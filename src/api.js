@@ -23,5 +23,8 @@ export default {
     book: {
         newbook: book =>
             axios.post('/api/books', {book}).then(res=>res.data.book)
+        ,
+        fetchEvents: () =>
+            axios.get('/api/books').then(res=>res.data)
     }
 };

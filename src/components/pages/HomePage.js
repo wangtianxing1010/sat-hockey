@@ -2,24 +2,62 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../../actions/auth';
+import * as eventActions from '../../actions/book';
 
-const HomePage = ({ isAuthenticated, logout }) => (
-    <div>
-        <h1>Home page</h1>
-        { isAuthenticated 
-        ? <button onClick={()=>logout()}>Logout</button> 
-        : (
+class HomePage extends React.Component{ 
+    state = {
+        data: {
+            // isAuthenticated: this.props.isAuthenticated
+        },
+        loading: false,
+        errors: {}
+    }
+
+    fetchEvents = () => {
+        this.props.fetchEvents()
+            .then(events=>{
+                console.log(events);
+                this.setState({ 
+                    ...this.state, 
+                    data: { events: events } 
+                })
+            })
+            .catch(err=>this.setState({ ...this.state, errors: {err: 'some errors'} }));
+    };
+
+    componentDidMount(){
+        this.fetchEvents();
+    }
+    
+    render(){
+        const {isAuthenticated} = this.props;
+        const {data, errors} = this.state;
+        return (
             <div>
-                <Link to='/login'>Login</Link> or <Link to='/signup'>Sign Up</Link>
+                <h1>Home page</h1>
+                {  
+                    // how to add SYNTAX not expressions??
+                    !isAuthenticated &&
+                    <div>
+                        <Link to='/login'>Login</Link> or <Link to='/signup'>Sign Up</Link>
+                    </div>
+                }
+                <h2>All Events</h2>
+                {errors 
+                    ? <p>{errors.err}</p>
+                    : data.events.map(event =>{
+                        console.log(event)
+                        // <h3>`Event name: ${event.book}, Event ID: ${event._id}`</h3>
+                    })
+                }
             </div>
-        )}
-    </div>
-);
+        )
+    }
+};
 
 HomePage.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    logout: PropTypes.func.isRequired
+    fetchEvents: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state){
@@ -28,4 +66,8 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { logout: actions.logout })(HomePage);
+export default connect(mapStateToProps, 
+    { 
+        fetchEvents: eventActions.fetchEvents,
+     }
+    )(HomePage);
