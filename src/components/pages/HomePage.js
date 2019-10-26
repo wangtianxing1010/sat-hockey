@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as eventActions from '../../actions/book';
+import EventForm from '../forms/EventForm';
 
 class HomePage extends React.Component{ 
     state = {
@@ -13,25 +14,34 @@ class HomePage extends React.Component{
         errors: {}
     }
 
-    fetchEvents = () => {
-        this.props.fetchEvents()
-            .then(events=>{
-                console.log(events);
-                this.setState({ 
-                    ...this.state, 
-                    data: { events: events } 
-                })
-            })
-            .catch(err=>this.setState({ ...this.state, errors: {err: 'some errors'} }));
-    };
-
     componentDidMount(){
-        this.fetchEvents();
+        this.setState({loading: true})
+        this.onInit();
+    }
+
+    onInit = () => {
+        this.props.fetchEvents()
+            .then(()=>{
+                this.setState({...this.state, loading: false})
+            })
+            .catch(err=>{
+                console.log('err msg', err);
+                this.setState({ ...this.state, errors: {err}, loading: false })
+            });
+    };
+    
+    renderItems = () => {
+        return <>
+            <h2>All Events</h2>
+            <ul>
+                {this.props.events.map((event, i)=><EventForm key={i} event={event} />)}
+            </ul>
+        </>
     }
     
     render(){
-        const {isAuthenticated} = this.props;
-        const {data, errors} = this.state;
+        const { isAuthenticated } = this.props;
+        const {loading} = this.state;
         return (
             <div>
                 <h1>Home page</h1>
@@ -42,14 +52,8 @@ class HomePage extends React.Component{
                         <Link to='/login'>Login</Link> or <Link to='/signup'>Sign Up</Link>
                     </div>
                 }
-                <h2>All Events</h2>
-                {errors 
-                    ? <p>{errors.err}</p>
-                    : data.events.map(event =>{
-                        console.log(event)
-                        // <h3>`Event name: ${event.book}, Event ID: ${event._id}`</h3>
-                    })
-                }
+                
+                { this.props.events instanceof(Array) && this.renderItems()}
             </div>
         )
     }
@@ -57,12 +61,17 @@ class HomePage extends React.Component{
 
 HomePage.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    fetchEvents: PropTypes.func.isRequired
+    fetchEvents: PropTypes.func.isRequired,
+    // events: PropTypes.arrayOf(PropTypes.shape({
+    //     book: PropTypes.string.isRequired,
+    //     _id: 
+    // })).isRequired
 }
 
 function mapStateToProps(state){
     return {
-        isAuthenticated: !!state.user.token
+        isAuthenticated: !!state.user.token,
+        events: state.events,
     }
 }
 

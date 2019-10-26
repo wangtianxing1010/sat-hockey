@@ -8,13 +8,18 @@ import { newbook } from '../../actions/book';
 
 class NewBookPage extends React.Component{
     state = {
-        book: null,
+        errors: {},
     };
 
     submit = (data) => 
-        this.props.newbook(data);
+        this.props.newbook(data)
+        .catch(err=>{
+            console.log('err msg', err);
+            this.setState({ ...this.state, error: err.response.data.errors})
+        });
 
     render(){
+        // console.log(this.state.errors);
         return (
             <Segment padded>
                 <h1>Post a new book</h1>

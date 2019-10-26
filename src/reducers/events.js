@@ -1,8 +1,11 @@
 import { createSelector } from 'reselect';
+import { EVENTS_FETCHED_SUCCESS } from '../types'
 
 
 export default function events(state={}, action={}) {
     switch(action.type){
+        case EVENTS_FETCHED_SUCCESS:
+            return action.events;
         default: 
             return state;
     }

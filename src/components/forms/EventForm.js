@@ -9,9 +9,10 @@ class EventForm extends React.Component{
     }
 
     render(){
+        const {book} = this.props.event;
         return (
         <Form>
-            <h1>Event Name</h1>
+            <h3>Event Name: {book}</h3>
             <p>Date:</p>
             <p>Maximum Participiants</p>
             <Button>Enroll</Button>
