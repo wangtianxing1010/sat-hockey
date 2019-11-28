@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as eventActions from '../../actions/book';
+import * as eventActions from '../../actions/eventActions'
 import EventForm from '../forms/EventForm';
 
 class HomePage extends React.Component{ 
@@ -31,17 +31,17 @@ class HomePage extends React.Component{
     };
     
     renderItems = () => {
+        const {loading} = this.state;
         return <>
             <h2>All Events</h2>
             <ul>
-                {this.props.events.map((event, i)=><EventForm key={i} event={event} />)}
+                {this.props.events.map((event, i)=> <EventForm loading={loading} key={i} event={event} />)}
             </ul>
         </>
     }
     
     render(){
         const { isAuthenticated } = this.props;
-        const {loading} = this.state;
         return (
             <div>
                 <h1>Home page</h1>

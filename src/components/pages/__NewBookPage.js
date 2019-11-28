@@ -4,7 +4,7 @@ import { Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import NewBookForm from '../forms/__NewBookForm';
 
-import { newbook } from '../../actions/book';
+import { newbook } from '../../actions/eventActions';
 
 class NewBookPage extends React.Component{
     state = {

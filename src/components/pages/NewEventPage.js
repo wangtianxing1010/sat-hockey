@@ -1,13 +1,14 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
-import NewEventForm from '../forms/NewEventForm';
+import NewEventForm from '../forms/__NewBookForm';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { newEvent } from '../../actions/event';
+import { newEvent } from '../../actions/eventActions';
 
 class NewEventPage extends React.Component{
     state = {
-        book: null,
+        event: null,
+        errors: {}
     };
 
     submit = (data) =>

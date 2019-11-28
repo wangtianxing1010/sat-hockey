@@ -8,14 +8,19 @@ class EventForm extends React.Component{
         data: {},
     }
 
+    enroll = () => {
+        // todo add oneself in the participants list if not yet in
+    }
+
     render(){
-        const {book} = this.props.event;
+        const {book, maxAllowed} = this.props.event;
+        const {loading} = this.props;
         return (
-        <Form>
+        <Form loading={loading}>
             <h3>Event Name: {book}</h3>
-            <p>Date:</p>
-            <p>Maximum Participiants</p>
-            <Button>Enroll</Button>
+            <p>Scheduled Date: </p>
+            <p>Maximum Participiants: {maxAllowed}</p>
+            <Button onClick={this.enroll}>Enroll</Button>
         </Form>
         );
     }

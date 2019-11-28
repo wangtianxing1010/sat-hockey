@@ -15,7 +15,7 @@ import * as serviceWorker from './serviceWorker';
 
 import rootReducer from './rootReducer';
 import {userLoggedIn} from './actions/auth';
-
+import setAuthorizationHeader from './utils/setAuthorizationHeader';
 import decode from 'jwt-decode';
 
 const store = createStore(
@@ -30,6 +30,7 @@ if(localStorage.sat_hockeyJWT){
         email: payload.email,
         confirmed: payload.confirmed,
      };
+    setAuthorizationHeader(localStorage.sat_hockeyJWT);
     store.dispatch(userLoggedIn(user));
 }
 

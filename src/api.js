@@ -20,11 +20,11 @@ export default {
         resetPassword: data =>
             axios.post('/api/auth/reset_password/', {data}), 
     } ,
-    book: {
-        newbook: book =>
-            axios.post('/api/books', {book}).then(res=>res.data.book)
+    event: {
+        newEvent: event =>
+            axios.post('/api/books', {event}).then(res=>res.data.event)
         ,
-        fetchEvents: () =>
-            axios.get('/api/books').then(res=>res.data.events)
+        fetchEvents: organizer =>
+            axios.get('/api/books', {organizer}).then(res=>res.data.events)
     }
 };

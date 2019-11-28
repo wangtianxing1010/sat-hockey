@@ -3,11 +3,11 @@ import { Form, Input, Label, Button } from 'semantic-ui-react';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import axios from 'axios';
 
-class NewBookForm extends React.Component{
+class NewEventForm extends React.Component{
 
     state = {
         data: {
-            book: '',
+            eventName: '',
         },
         error: {},
         loading: false,
@@ -26,8 +26,8 @@ class NewBookForm extends React.Component{
 
     validate = data => {
         const errors = {};
-        if(!data.book) 
-            errors.book = "Can't be empty";
+        if(!data.eventName) 
+            errors.eventName = "Can't be empty";
 
         return errors;
     }
@@ -39,7 +39,7 @@ class NewBookForm extends React.Component{
         if (Object.keys(errors).length === 0){
             this.setState({loading: true});
             this.props.submit(this.state.data)
-            .then(book=>console.log(book))
+            .then(eventName=>console.log(eventName))
             // .then(()=>this.history.push('/dashboard'))
         //.err=> this.setState({loading:false, err.global: err.res.error.message})
         } 
@@ -51,16 +51,16 @@ class NewBookForm extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <Input labelPosition='right'
                     placeholder='Book name' onChange={this.handleChange}
-                    value={data.book} type='text' id='book' name='book'>
-                    <Label basic>Book</Label>
+                    value={data.eventName} type='text' id='eventName' name='eventName'>
+                    <Label basic>Event Name</Label>
                     <input />
                     <Label>.00</Label>
                 </Input>
                 <br/>
-                <Button primary>Create Book</Button>
+                <Button primary>Create Event</Button>
             </Form>
         );
     }
 }
 
-export default NewBookForm;
+export default NewEventForm;

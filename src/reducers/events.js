@@ -15,5 +15,11 @@ export const eventsSelector = state => state.events;
 
 export const allEventsSelector = createSelector(
     eventsSelector,
-    eventHash => Object.values(eventHash)
+    eventHash => Object.values(eventHash) // returns an array of event objects
+    //  eventHash {
+        // 111: {},
+        // 222: {}
+    // }
+    // becomes ==>
+    // Object.values(eventHash) :[{},{}]
 )
